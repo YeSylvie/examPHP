@@ -19,6 +19,23 @@
             }
         }
 
+        function modify(){
+            $user = new User();
+            if (!empty($_POST)) {
+                if ($user->save($_POST)){
+                    $_SESSION['errors'] = [];
+                    include (__DIR__.'/../views/users_list.php');
+                } else {
+                    $_SESSION['errors'] = $user->errors;
+                    include(__DIR__.'/../views/users_modify.php');
+                }
+            } else {
+                include(__DIR__.'/../views/users_modify.php');
+            }
+        }
+
+
+
         function login() {
             $user = new User();
             if (!empty($_POST)) {
@@ -49,7 +66,8 @@
         $arrayAvailableActionUser = array(
             'register',
             'login',
-            'logout'
+            'logout',
+            'modify'
         );
 
         if(in_array($action, $arrayAvailableActionUser)) {

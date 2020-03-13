@@ -174,7 +174,7 @@
                     ':password' => $hashedPassword,
                     ':firstname' => $data['firstname'],
                     ':lastname' => $data['lastname']
-//                    ':photo' => $data['photo']
+
                 ))
                 ) {
                     return true;
@@ -184,6 +184,36 @@
             }
             return false;
         }
+
+        public function editUser($data){
+            if (isset($data['login']) && ($data['password']) && ($data['firstname']) && ($data['lastname'])) {
+
+                $dbh = Connection::get();
+                $sql = "UPDATE users SET login=:login, password=:password, firstname=:firstname, lastname=:lastname where login = :login";
+                $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+               if($sth->execute(array(
+                   ':login' => $data['login'],
+                   ':password' => $data['password'],
+                   ':firstname' => $data['firstname'],
+                   ':lastname' => $data['lastname'],
+               )))
+               {
+                   return true;
+               } else {
+                   $this->errors[] = 'Pas réussi a effectuer la modification';
+               };
+            }
+        }
+
+        public function modify()
+        {
+            $dbh = Connection::get();
+            $stmt = $dbh->query("select * from users where user_id = :user_id");
+            $users = $stmt->fetchAll(PDO::FETCH_CLASS);
+            return $users;
+        }
+
 
         public function login($data)
         {
