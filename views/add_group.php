@@ -17,6 +17,10 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             padding: 1rem 2rem;
         }
 
+        .errors {
+            color: #ff5555;
+        }
+
         .success {
             color: limegreen;
         }
@@ -28,6 +32,15 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 <div class="container">
 
     <div class="row">
+
+        <ul class="errors">
+            <?php
+            foreach ($errors as $error) {
+                echo("<li>" . $error . "</li>");
+            }
+            ?>
+        </ul>
+
         <ul class="success">
             <?php
             if (!empty($success)) {

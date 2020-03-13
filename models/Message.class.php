@@ -77,10 +77,21 @@
                 ))) {
                     return true;
                 } else {
-                    // ERROR
-                    // put errors in $session
                     $this->errors['Le message ne peut pas être ajouté, recommence!'];
                 }
+            }
+        }
+
+        public function suppr($data) {
+            $dbh = Connection::get();
+            $sql = "DELETE FROM messages WHERE id = :msg_id";
+            $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            if ($sth->execute(array(
+                ':msg_id' => $data['msg_id']
+            ))) {
+                return true;
+            } else {
+                $this->errors['Le message n\'a pas pu être supprimé, recommence!'];
             }
         }
     }

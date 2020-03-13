@@ -1,6 +1,7 @@
 <?php
 //session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
 $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
 ?>
 
@@ -19,6 +20,10 @@ $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
         .errors {
             color: #ff5555;
         }
+
+        .success {
+            color: limegreen;
+        }
     </style>
 </head>
 
@@ -27,6 +32,23 @@ $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
 <div class="container">
 
     <div class="row">
+
+        <ul class="errors">
+            <?php
+            foreach ($errors as $error) {
+                echo("<li>" . $error . "</li>");
+            }
+            ?>
+        </ul>
+
+        <ul class="success">
+            <?php
+            if (!empty($success)) {
+                echo("<li>" . $success . "</li>");
+            }
+            ?>
+        </ul>
+
         <h2>Mes messages</h2>
         <table class="u-full-width">
             <thead>
@@ -35,6 +57,7 @@ $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
                 <th>content</th>
                 <th>user_id</th>
                 <th>group_id</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -46,6 +69,7 @@ $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
                     <td><?= $message->content ?></td>
                     <td><?= $message->user_id ?></td>
                     <td><?= $message->group_id ?></td>
+                    <td><a href="./index.php?controller=messages&action=suppr&msg_id=<?= $message->id?>">Supprimer</a></td>
                 </tr>
                 <?php
             }

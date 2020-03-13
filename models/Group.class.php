@@ -43,6 +43,10 @@
                 $this->errors[] = 'Commence par entrer un titre pour le groupe avant de créer';
             }
 
+            if (empty($data['name'])) {
+                $this->errors[] = 'Entrer un nouveau nom de groupe';
+            }
+
             if (count($this->errors) > 0) {
                 return false;
             }
@@ -79,6 +83,24 @@
                 ));
                 $groups = $sth->fetchAll(PDO::FETCH_CLASS);
                 return $groups;
+            }
+        }
+
+        public function modify($data)
+        {
+            if ($this->validate($data)) {
+                $dbh = Connection::get();
+                $sql = "UPDATE groups SET title = :title WHERE id = :group_id AND creator_id = :user_id";
+                $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                if ($sth->execute(array(
+                    ':title' => $data['name'],
+                    ':group_id' => $data['title'],
+                    ':user_id' => $data['user_id']
+                ))) {
+                    return true;
+                } else {
+                    $this->errors['J\'ai pas réussi à modifier ton groupe, recommence!'];
+                }
             }
         }
 

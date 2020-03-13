@@ -17,6 +17,10 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             padding: 1rem 2rem;
         }
 
+        .errors {
+            color: #ff5555;
+        }
+
         .success {
             color: limegreen;
         }
@@ -29,6 +33,14 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 
     <div class="row">
 
+        <ul class="errors">
+            <?php
+            foreach ($errors as $error) {
+                echo("<li>" . $error . "</li>");
+            }
+            ?>
+        </ul>
+
         <ul class="success">
             <?php
             if (!empty($success)) {
@@ -37,27 +49,22 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             ?>
         </ul>
 
-        <h2>Modifier un groupe </h2>
-        <table class="u-full-width">
-            <thead>
-            <tr>
-                <th>Nom du groupe</th>
-                <th>Nouveau nom du groupe</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            foreach ($groups as $group) {
-                ?>
-                <tr>
-                    <td><?= $group->id ?></td>
-                    <td><?= $group->title ?></td>
-                </tr>
-                <?php
-            }
-            ?>
-            </tbody>
-        </table>
+        <form method="post" action="./index.php?controller=groups&action=modify" id="modifyGroupForm">
+            <fieldset>
+                <legend>Modifier un groupe</legend>
+                <label for="groupOldName">Nom du groupe à modifier</label>
+                <select name="title" id="groupeOldName">
+                    <option></option>
+                    <?php foreach ($groups as $group) { ?>
+                        <option value="<?= $group->id?>"><?= $group->title?></option>
+                    <?php } ?>
+                </select>
+                <label for="groupNewName">Nouveau nom</label>
+                <input type="text" id="groupNewName" name="name" value="">
+            </fieldset>
+            <input type="submit" value="Envoyer" class="button-primary">
+            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+        </form>
     </div>
 
     <div class="row">

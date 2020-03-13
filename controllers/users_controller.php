@@ -17,6 +17,7 @@
                     include(__DIR__.'/../views/users_register.php');
                 }
             } else {
+                $_SESSION['errors'] = [];
                 $_SESSION['success'] = '';
                 include(__DIR__.'/../views/users_register.php');
             }
@@ -34,6 +35,7 @@
                     include (__DIR__.'/../views/users_login.php');
                 }
             } else {
+                $_SESSION['errors'] = [];
                 include (__DIR__.'/../views/users_login.php');
             }
         }

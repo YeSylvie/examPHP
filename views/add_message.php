@@ -56,7 +56,7 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
                 <legend>add message</legend>
                 <label for="contentMessage">Content</label>
                 <textarea id="contentMessage" name="content"></textarea>
-                <label for="groupeMessage">Sélect your group</label>
+                <label for="groupeMessage">Select your group</label>
                 <select name="groupe" id="groupeMessage">
                     <option></option>
                     <?php foreach ($groups as $group) { ?>

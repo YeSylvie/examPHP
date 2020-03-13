@@ -15,10 +15,6 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             border-radius: 4px;
             padding: 1rem 2rem;
         }
-
-        .errors {
-            color: #ff5555;
-        }
     </style>
 </head>
 
