@@ -38,6 +38,40 @@
             }
         }
 
+        function modify(){
+            $user = new User();
+            if (!empty($_POST)) {
+                if ($user->editUser($_POST)){
+                    $_SESSION['errors'] = [];
+                    $_SESSION['success'] = 'Votre compte a bien été modifié';
+                    include (__DIR__.'/../views/users_modify.php');
+                } else {
+                    $_SESSION['errors'] = $user->errors;
+                    include(__DIR__.'/../views/users_modify.php');
+                }
+            } else {
+                include(__DIR__.'/../views/users_modify.php');
+            }
+        }
+
+        function editUser(){
+            $user = new User();
+            if (!empty($_POST)) {
+                if ($user->editUser($_POST)){
+                    $_SESSION['errors'] = [];
+                    $_SESSION['success'] = 'Votre compte a bien été modifié';
+                    include (__DIR__.'/../views/users_modify.php');
+                } else {
+                    $_SESSION['errors'] = $user->errors;
+                    include(__DIR__.'/../views/users_modify.php');
+                }
+            } else {
+                include(__DIR__.'/../views/users_modify.php');
+            }
+        }
+
+
+
         //Il faut appuyer deux fois pour se log out correctement
         function logout() {
             if (ini_get("session.use_cookies")) {
@@ -54,7 +88,9 @@
         $arrayAvailableActionUser = array(
             'register',
             'login',
-            'logout'
+            'logout',
+            'modify',
+            'editUser'
         );
 
         if(in_array($action, $arrayAvailableActionUser)) {

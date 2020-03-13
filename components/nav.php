@@ -14,6 +14,7 @@
             <a href="./index.php?controller=groups&action=listg">Liste de mes groupes</a>
             <a href="./index.php?controller=messages&action=add">Écrire un message</a>
             <a href="./index.php?controller=messages&action=listm">Liste des messages</a>
+            <a href="./index.php?controller=users&action=modify">Modifier le profil</a>
             <a href="./index.php?controller=users&action=logout">Se déconnecter</a>
     <?php
         }
