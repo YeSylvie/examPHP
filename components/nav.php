@@ -2,9 +2,9 @@
     <?php
         if(empty($_SESSION['user_id'])) {
     ?>
-<!--            Les href sont mal gérés, selon l'action par lequel on commence, on peut avoir l'erreur 404-->
             <a href="./index.php?controller=users&action=register">Inscription</a>
             <a href="./index.php?controller=users&action=login">Se connecter</a>
+            <a href="./index.php?controller=groups&action=findall">Voir les messages d'un groupe</a>
     <?php
         }
 

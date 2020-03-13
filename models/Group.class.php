@@ -83,6 +83,11 @@
                 ));
                 $groups = $sth->fetchAll(PDO::FETCH_CLASS);
                 return $groups;
+            } else {
+                $dbh = Connection::get();
+                $sth = $dbh->query("select title from groups");
+                $groups = $sth->fetchAll(PDO::FETCH_CLASS);
+                return $groups;
             }
         }
 
@@ -101,6 +106,21 @@
                 } else {
                     $this->errors['J\'ai pas réussi à modifier ton groupe, recommence!'];
                 }
+            }
+        }
+
+        public function search($data)
+        {
+            $dbh = Connection::get();
+            $sql = "SELECT user_id, content FROM messages WHERE group_id = :group_id";
+            $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            if ($sth->execute(array(
+                ':group_id' => $data['group_id']
+            ))) {
+                $groups = $sth->fetchAll(PDO::FETCH_CLASS);
+                return $groups;
+            } else {
+                $this->errors['J\'ai rien trouvé, pas de ma faute!'];
             }
         }
 

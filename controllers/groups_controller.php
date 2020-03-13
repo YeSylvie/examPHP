@@ -54,10 +54,31 @@
             }
         }
 
+        function findall() {
+            $group = new Group();
+            $_SESSION['errors'] = [];
+            $groups = $group->findAll($_SESSION);
+            $_SESSION['groups'] = $groups;
+            include (__DIR__.'/../views/messages_by_groups.php');
+        }
+
+        // Ce que j'ai essayé de faire :
+        // Fonction qui me permettrai de récupérer tous les messages d'un groupe (l'id du groupe est dans le $_POST)
+        // en appelant la fonction search() de la classe Group
+        function search () {
+            $group = new Group();
+            $_SESSION['errors'] = [];
+            $groups = $group->search($_POST);
+            $_SESSION['groups'] = $groups;
+            include (__DIR__.'/../views/messages_by_groups.php');
+        }
+
         $arrayAvailableActionGroup = array(
             'add',
             'listg',
-            'modify'
+            'modify',
+            'findall',
+            "search"
         );
 
         if(in_array($action, $arrayAvailableActionGroup)) {
