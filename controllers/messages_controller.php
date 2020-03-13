@@ -9,14 +9,17 @@
             if (!empty($_POST)) {
                 if ($message->add($_POST)){
                     $_SESSION['errors'] = [];
-    //                    header('./index.php?controller=groups&action=listg');
-                    include (__DIR__.'/../views/messages_list.php');
+                    $_SESSION['success'] = 'Votre message est bien ajouté';
+//                    include (__DIR__.'/../views/messages_list.php');
+                    include (__DIR__.'/../views/add_message.php');
                 }else{
                     $_SESSION['errors'] = $message->errors;
-                    include (__DIR__.'/../views/add_messages.php');
+                    $_SESSION['success'] = '';
+                    include (__DIR__.'/../views/add_message.php');
                 }
             } else {
-                include (__DIR__.'/../views/add_messages.php');
+                $_SESSION['success'] = '';
+                include (__DIR__.'/../views/add_message.php');
             }
         }
 
@@ -24,7 +27,7 @@
             $message = new Message();
             $_SESSION['errors'] = [];
             $messages = $message->findAll($_SESSION);
-            $_SESSION['groups'] = $messages;
+            $_SESSION['messages'] = $messages;
             include (__DIR__.'/../views/messages_list.php');
         }
 

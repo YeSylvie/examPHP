@@ -42,11 +42,6 @@
                 ));
                 $messages = $sth->fetchAll(PDO::FETCH_CLASS);
                 return $messages;
-            } else {
-                $dbh = Connection::get();
-                $sth = $dbh->query("select * from messages");
-                $messages = $sth->fetchAll(PDO::FETCH_CLASS);
-                return $messages;
             }
 
         }
@@ -56,8 +51,12 @@
             $this->errors = [];
 
             /* required fields */
-            if (!isset($data['content'])) {
+            if (!isset($data['content']) && mpty($data['content'])) {
                 $this->errors[] = 'Commence par entrée un message avant d\'envoyer';
+            }
+
+            if (empty($data['groupe'])) {
+                $this->errors[] = 'Faut choisir un groupe';
             }
 
             if (count($this->errors) > 0) {
@@ -67,13 +66,13 @@
         }
 
         public function add($data) {
-
             if ($this->validate($data)) {
                 $dbh = Connection::get();
-                $sql = "insert into messages ( user_id, content) values (:user_id, :content)";
+                $sql = "insert into messages ( user_id, group_id, content) values (:user_id, :group_id, :content)";
                 $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                 if ($sth->execute(array(
                     ':user_id' => $data['user_id'],
+                    'group_id' => $data['groupe'],
                     ':content' => $data['content']
                 ))) {
                     return true;

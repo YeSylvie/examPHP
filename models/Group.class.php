@@ -72,7 +72,7 @@
         {
             if(!empty($data['user_id'])) {
                 $dbh = Connection::get();
-                $sql = "select title from groups where creator_id = :user_id OR member_id = :user_id";
+                $sql = "select id, title from groups where creator_id = :user_id OR member_id = :user_id";
                 $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                 $sth->execute(array(
                     ':user_id' => $data['user_id']

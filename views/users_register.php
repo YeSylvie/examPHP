@@ -1,6 +1,6 @@
 <?php
-//    session_start();
-    $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
 ?>
 
 
@@ -19,6 +19,10 @@
             .errors {
                 color: #ff5555;
             }
+
+            .success {
+                color: limegreen;
+            }
         </style>
     </head>
 
@@ -36,7 +40,15 @@
                 ?>
             </ul>
 
-            <form method="post" action="./index.php?controller=users&action=register" id="userRegisterForm" enctype="multipart/form-data">
+            <ul class="success">
+                <?php
+                if (!empty($success)) {
+                    echo("<li>" . $success . "</li>");
+                }
+                ?>
+            </ul>
+
+            <form method="post" action="../index.php?controller=users&action=register" id="userRegisterForm" enctype="multipart/form-data">
                 <fieldset>
                     <legend>user register</legend>
                     <label for="userLogin">login</label>

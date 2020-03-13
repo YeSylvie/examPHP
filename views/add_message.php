@@ -1,6 +1,7 @@
 <?php
 //session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
 $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
 $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 
@@ -21,6 +22,10 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
         .errors {
             color: #ff5555;
         }
+
+        .success {
+            color: limegreen;
+        }
     </style>
 </head>
 
@@ -30,6 +35,14 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 
     <div class="row">
 
+        <ul class="success">
+            <?php
+                if (!empty($success)) {
+                    echo("<li>" . $success . "</li>");
+                }
+            ?>
+        </ul>
+
         <ul class="errors">
             <?php
             foreach ($errors as $error) {
@@ -38,15 +51,16 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             ?>
         </ul>
 
-        <form method="post" action="../index.php?controller=messages&action=add" id="addMessageForm">
+        <form method="post" action="./index.php?controller=messages&action=add" id="addMessageForm">
             <fieldset>
                 <legend>add message</legend>
                 <label for="contentMessage">Content</label>
                 <textarea id="contentMessage" name="content"></textarea>
-                <label for="groupeMessage">Content</label>
+                <label for="groupeMessage">Sélect your group</label>
                 <select name="groupe" id="groupeMessage">
+                    <option></option>
                     <?php foreach ($groups as $group) { ?>
-                        <option value="<?= $group->title?>"><?= $group->title?></option>
+                        <option value="<?= $group->id?>"><?= $group->title?></option>
                     <?php } ?>
                 </select>
             </fieldset>

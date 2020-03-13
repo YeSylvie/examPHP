@@ -9,12 +9,15 @@
             if (!empty($_POST)) {
                 if ($user->save($_POST)){
                     $_SESSION['errors'] = [];
-                    include (__DIR__.'/../views/users_list.php');
+                    $_SESSION['success'] = 'Vous êtes bien inscrit';
+                    include (__DIR__.'/../views/users_register.php');
                 } else {
                     $_SESSION['errors'] = $user->errors;
+                    $_SESSION['success'] = '';
                     include(__DIR__.'/../views/users_register.php');
                 }
             } else {
+                $_SESSION['success'] = '';
                 include(__DIR__.'/../views/users_register.php');
             }
         }
@@ -24,6 +27,7 @@
             if (!empty($_POST)) {
                 if ($user->login($_POST)){
                     $_SESSION['errors'] = [];
+                    $_SESSION['success'] = '';
                     include (__DIR__.'/../views/add_group.php');
                 }else{
                     $_SESSION['errors'] = $user->errors;
@@ -34,6 +38,7 @@
             }
         }
 
+        //Il faut appuyer deux fois pour se log out correctement
         function logout() {
             if (ini_get("session.use_cookies")) {
                 $params = session_get_cookie_params();

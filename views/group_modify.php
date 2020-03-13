@@ -1,6 +1,7 @@
 <?php
 //session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
 $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 ?>
 
@@ -16,8 +17,8 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             padding: 1rem 2rem;
         }
 
-        .errors {
-            color: #ff5555;
+        .success {
+            color: limegreen;
         }
     </style>
 </head>
@@ -27,12 +28,21 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 <div class="container">
 
     <div class="row">
-        <h2>Liste des groupes</h2>
+
+        <ul class="success">
+            <?php
+            if (!empty($success)) {
+                echo("<li>" . $success . "</li>");
+            }
+            ?>
+        </ul>
+
+        <h2>Modifier un groupe </h2>
         <table class="u-full-width">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Titre</th>
+                <th>Nom du groupe</th>
+                <th>Nouveau nom du groupe</th>
             </tr>
             </thead>
             <tbody>

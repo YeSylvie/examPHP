@@ -9,13 +9,15 @@
             if (!empty($_POST)) {
                 if ($group->add($_POST)){
                     $_SESSION['errors'] = [];
-//                    header('./index.php?controller=groups&action=listg');
-                    include (__DIR__.'/../views/groups_list.php');
+                    $_SESSION['success'] = 'Votre groupe a bien été créé';
+                    include (__DIR__.'/../views/add_group.php');
                 }else{
                     $_SESSION['errors'] = $group->errors;
+                    $_SESSION['success'] = '';
                     include (__DIR__.'/../views/add_group.php');
                 }
             } else {
+                $_SESSION['success'] = '';
                 include (__DIR__.'/../views/add_group.php');
             }
         }

@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
 ?>
@@ -23,17 +23,18 @@ $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
 </head>
 
 <body>
-<?php require_once('../components/nav.php') ?>
+<?php require_once(__DIR__.'/../components/nav.php') ?>
 <div class="container">
 
     <div class="row">
-        <h2>Messages</h2>
+        <h2>Mes messages</h2>
         <table class="u-full-width">
             <thead>
             <tr>
+                <th>id</th>
                 <th>content</th>
-                <th>created</th>
                 <th>user_id</th>
+                <th>group_id</th>
             </tr>
             </thead>
             <tbody>
@@ -41,9 +42,10 @@ $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
             foreach ($messages as $message) {
                 ?>
                 <tr>
+                    <td><?= $message->id ?></td>
                     <td><?= $message->content ?></td>
                     <td><?= $message->user_id ?></td>
-                    <td><?= $message->groupe_id ?></td>
+                    <td><?= $message->group_id ?></td>
                 </tr>
                 <?php
             }

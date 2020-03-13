@@ -1,6 +1,7 @@
 <?php
 //session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
 $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 ?>
 
@@ -16,8 +17,8 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             padding: 1rem 2rem;
         }
 
-        .errors {
-            color: #ff5555;
+        .success {
+            color: limegreen;
         }
     </style>
 </head>
@@ -27,6 +28,13 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 <div class="container">
 
     <div class="row">
+        <ul class="success">
+            <?php
+            if (!empty($success)) {
+                echo("<li>" . $success . "</li>");
+            }
+            ?>
+        </ul>
 
         <form method="post" action="./index.php?controller=groups&action=add" id="addGroupForm">
             <fieldset>
