@@ -36,7 +36,7 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
             ?>
         </ul>
 
-        <form method="post" action="../index.php?controller=groups&action=add" id="addGroupForm">
+        <form method="post" action="./index.php?controller=groups&action=add" id="addGroupForm">
             <fieldset>
                 <legend>add group</legend>
                 <label for="title">title</label>

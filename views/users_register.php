@@ -36,7 +36,7 @@
                 ?>
             </ul>
 
-            <form method="post" action="../index.php?controller=users&action=register" id="userRegisterForm" enctype="multipart/form-data">
+            <form method="post" action="./index.php?controller=users&action=register" id="userRegisterForm" enctype="multipart/form-data">
                 <fieldset>
                     <legend>user register</legend>
                     <label for="userLogin">login</label>

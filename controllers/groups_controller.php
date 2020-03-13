@@ -7,8 +7,6 @@
         function add() {
             $group = new Group();
             if (!empty($_POST)) {
-                echo'ouiii';
-                die;
                 if ($group->add($_POST)){
                     $_SESSION['errors'] = [];
                     include (__DIR__.'/../views/page_group.php');

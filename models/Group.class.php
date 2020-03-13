@@ -55,8 +55,6 @@
         }
 
         function add($data) {
-            echo 'je passe';
-            die;
             if ($this->validate($data)) {
                 $dbh = Connection::get();
                 $sql = "insert into groups ( title, creator_id, member_id) values (:title, :creator_id, :member_id)";

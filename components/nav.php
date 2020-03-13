@@ -6,6 +6,7 @@
         {
     ?>
             <a href="../index.php?controller=groups&action=add">Créer un groupe</a>
+            <a href="../index.php?controller=users&action=logout">Se déconnecter</a>
     <?php
         }
     ?>
