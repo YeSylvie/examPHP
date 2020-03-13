@@ -1,9 +1,7 @@
 <?php
-//session_start();
+session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
-$groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
-
 ?>
 
 <html>
@@ -25,34 +23,33 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 </head>
 
 <body>
-<?php require_once(__DIR__.'/../components/nav.php') ?>
+<?php require_once('../components/nav.php') ?>
 <div class="container">
 
     <div class="row">
-
-        <ul class="errors">
+        <h2>Messages</h2>
+        <table class="u-full-width">
+            <thead>
+            <tr>
+                <th>content</th>
+                <th>created</th>
+                <th>user_id</th>
+            </tr>
+            </thead>
+            <tbody>
             <?php
-            foreach ($errors as $error) {
-                echo("<li>" . $error . "</li>");
+            foreach ($messages as $message) {
+                ?>
+                <tr>
+                    <td><?= $message->content ?></td>
+                    <td><?= $message->user_id ?></td>
+                    <td><?= $message->groupe_id ?></td>
+                </tr>
+                <?php
             }
             ?>
-        </ul>
-
-        <form method="post" action="../index.php?controller=messages&action=add" id="addMessageForm">
-            <fieldset>
-                <legend>add message</legend>
-                <label for="contentMessage">Content</label>
-                <textarea id="contentMessage" name="content"></textarea>
-                <label for="groupeMessage">Content</label>
-                <select name="groupe" id="groupeMessage">
-                    <?php foreach ($groups as $group) { ?>
-                        <option value="<?= $group->title?>"><?= $group->title?></option>
-                    <?php } ?>
-                </select>
-            </fieldset>
-            <input type="submit" value="Envoyer" class="button-primary">
-            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-        </form>
+            </tbody>
+        </table>
     </div>
 
     <div class="row">

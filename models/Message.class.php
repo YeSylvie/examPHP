@@ -1,11 +1,8 @@
 <?php
     require_once(__DIR__.'/../classes/connection.class.php');
 
-    Class Group {
+    Class Message {
         public $id;
-//        public $title;
-//        public $creator_id;
-//        public $member_id;
 
         public $errors = [];
 
@@ -34,13 +31,33 @@
             }
         }
 
+        public function findAll($data)
+        {
+            if(!empty($data['user_id'])) {
+                $dbh = Connection::get();
+                $sql = "select * from messages where user_id = :user_id";
+                $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $sth->execute(array(
+                    ':user_id' => $data['user_id']
+                ));
+                $messages = $sth->fetchAll(PDO::FETCH_CLASS);
+                return $messages;
+            } else {
+                $dbh = Connection::get();
+                $sth = $dbh->query("select * from messages");
+                $messages = $sth->fetchAll(PDO::FETCH_CLASS);
+                return $messages;
+            }
+
+        }
+
         public function validate($data)
         {
             $this->errors = [];
 
             /* required fields */
-            if (!isset($data['title'])) {
-                $this->errors[] = 'Commence par entrer un titre pour le groupe avant de créer';
+            if (!isset($data['content'])) {
+                $this->errors[] = 'Commence par entrée un message avant d\'envoyer';
             }
 
             if (count($this->errors) > 0) {
@@ -49,37 +66,22 @@
             return true;
         }
 
-        function add($data) {
+        public function add($data) {
+
             if ($this->validate($data)) {
                 $dbh = Connection::get();
-                $sql = "insert into groups ( title, creator_id, member_id) values (:title, :creator_id, :member_id)";
+                $sql = "insert into messages ( user_id, content) values (:user_id, :content)";
                 $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                 if ($sth->execute(array(
-                    ':title' => $data['title'],
-                    ':creator_id' => $data['user_id'],
-                    ':member_id' => $data['user_id']
+                    ':user_id' => $data['user_id'],
+                    ':content' => $data['content']
                 ))) {
                     return true;
                 } else {
                     // ERROR
                     // put errors in $session
-                    $this->errors['J\'ai pas réussi à créer ton groupe, recommence!'];
+                    $this->errors['Le message ne peut pas être ajouté, recommence!'];
                 }
             }
         }
-
-        public function findAll($data)
-        {
-            if(!empty($data['user_id'])) {
-                $dbh = Connection::get();
-                $sql = "select title from groups where creator_id = :user_id OR member_id = :user_id";
-                $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-                $sth->execute(array(
-                    ':user_id' => $data['user_id']
-                ));
-                $groups = $sth->fetchAll(PDO::FETCH_CLASS);
-                return $groups;
-            }
-        }
-
     }

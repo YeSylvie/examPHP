@@ -9,18 +9,28 @@
             if (!empty($_POST)) {
                 if ($group->add($_POST)){
                     $_SESSION['errors'] = [];
-                    include (__DIR__.'/../views/page_group.php');
+//                    header('./index.php?controller=groups&action=listg');
+                    include (__DIR__.'/../views/groups_list.php');
                 }else{
                     $_SESSION['errors'] = $group->errors;
-                    include (__DIR__.'/../views/add_group.php.php');
+                    include (__DIR__.'/../views/add_group.php');
                 }
             } else {
-                include (__DIR__.'/../views/add_group.php.php');
+                include (__DIR__.'/../views/add_group.php');
             }
         }
 
+        function listg() {
+            $group = new Group();
+            $_SESSION['errors'] = [];
+            $groups = $group->findAll($_SESSION);
+            $_SESSION['groups'] = $groups;
+            include (__DIR__.'/../views/groups_list.php');
+        }
+
         $arrayAvailableActionGroup = array(
-            'add'
+            'add',
+            'listg'
         );
 
         if(in_array($action, $arrayAvailableActionGroup)) {

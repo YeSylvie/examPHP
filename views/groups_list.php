@@ -1,9 +1,7 @@
 <?php
 //session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
-$messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
 $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
-
 ?>
 
 <html>
@@ -29,30 +27,25 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 <div class="container">
 
     <div class="row">
-
-        <ul class="errors">
+        <h2>Liste des groupes</h2>
+        <table class="u-full-width">
+            <thead>
+            <tr>
+                <th>Titre</th>
+            </tr>
+            </thead>
+            <tbody>
             <?php
-            foreach ($errors as $error) {
-                echo("<li>" . $error . "</li>");
+            foreach ($groups as $group) {
+                ?>
+                <tr>
+                    <td><?= $group->title ?></td>
+                </tr>
+                <?php
             }
             ?>
-        </ul>
-
-        <form method="post" action="../index.php?controller=messages&action=add" id="addMessageForm">
-            <fieldset>
-                <legend>add message</legend>
-                <label for="contentMessage">Content</label>
-                <textarea id="contentMessage" name="content"></textarea>
-                <label for="groupeMessage">Content</label>
-                <select name="groupe" id="groupeMessage">
-                    <?php foreach ($groups as $group) { ?>
-                        <option value="<?= $group->title?>"><?= $group->title?></option>
-                    <?php } ?>
-                </select>
-            </fieldset>
-            <input type="submit" value="Envoyer" class="button-primary">
-            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-        </form>
+            </tbody>
+        </table>
     </div>
 
     <div class="row">

@@ -28,14 +28,6 @@ $groups = isset($_SESSION['groups']) ? $_SESSION['groups'] : [];
 
     <div class="row">
 
-        <ul class="errors">
-            <?php
-            foreach ($groups as $group) {
-                echo("<li>" . $groups . "</li>");
-            }
-            ?>
-        </ul>
-
         <form method="post" action="./index.php?controller=groups&action=add" id="addGroupForm">
             <fieldset>
                 <legend>add group</legend>
